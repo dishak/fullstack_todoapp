@@ -1,8 +1,14 @@
+
 const express = require("express");
 const { createTodo, updateTodo } = require("./types");
 const { todo } = require("./db");
 const cors = require("cors");
 const app = express();
+ let todos=  { title: "Sorry!",
+ description: "I can't go to gym",
+ completed: false};
+
+
 
 app.use(express.json());
 app.use(cors());
@@ -30,9 +36,10 @@ app.post("/todo", async function(req, res) {
 })
 
 app.get("/todos", async function(req, res) {
-    const todos = await todo.find({});
+     todos = await todo.find({});
 
     res.json({
+        "msg":"received data",
         todos
     })
 
@@ -58,5 +65,8 @@ app.put("/completed", async function(req, res) {
         msg: "Todo marked as completed"
     })
 })
+module.exports = {
+    todos
+}
 
 app.listen(3000);
